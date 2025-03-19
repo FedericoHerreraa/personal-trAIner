@@ -20,31 +20,31 @@ export const HeaderSection = () => {
     };
 
     return (
-        <GestureHandlerRootView className='flex-1'>
-            <View className='flex flex-row justify-between mt-2 px-3 border-b border-b-zinc-300 pb-3'>
-                <Text className='text-3xl'>Personal Tr
-                    <Text className='text-violet-600'>AI</Text>
+            <View className='flex flex-row justify-between mt-2 px-5 pb-3'>
+                <Text className='text-xl'>Personal Tr
+                    <Text className='text-violet-600 mx-1'>AI</Text>
                     ner
                 </Text>
                 <Pressable onPress={handleOpenPress}>
                     <FontAwesome5 name="user-alt" size={24} color="black" />
                 </Pressable>
             </View>
+        // <GestureHandlerRootView>
 
-            <BottomSheet
-                ref={bottomSheetRef}
-                onChange={handleSheetChanges}
-                snapPoints={['95%']} 
-                index={-1}  
-                onClose={handleClosePress}
-            >
-                <View className='flex-1 items-center p-20' >
-                    <Text>Awesome 🎉</Text>
-                    <Pressable onPress={handleClosePress}>
-                        <Text className="mt-2 text-blue-500">Cerrar</Text>
-                    </Pressable>
-                </View>
-            </BottomSheet>
-        </GestureHandlerRootView>
+        //     <BottomSheet
+        //         ref={bottomSheetRef}
+        //         onChange={handleSheetChanges}
+        //         snapPoints={['95%']} 
+        //         index={-1}  
+        //         onClose={handleClosePress}
+        //     >
+        //         <View className='flex-1 items-center p-20' >
+        //             <Text>Awesome 🎉</Text>
+        //             <Pressable onPress={handleClosePress}>
+        //                 <Text className="mt-2 text-blue-500">Cerrar</Text>
+        //             </Pressable>
+        //         </View>
+        //     </BottomSheet>
+        // </GestureHandlerRootView>
     );
 };

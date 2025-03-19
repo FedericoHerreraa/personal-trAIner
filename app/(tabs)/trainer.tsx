@@ -8,7 +8,7 @@ export default function Trainer() {
         <ScreenLayout>
             <HeaderSection />
 
-            <View className='flex flex-row justify-between mt-5'>
+            <View className='flex flex-row justify-between'>
                 <Text className='text-4xl ml-5 font-bold'>TrAIner</Text>
             </View>
         </ScreenLayout>

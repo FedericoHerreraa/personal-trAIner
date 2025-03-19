@@ -9,11 +9,11 @@ export default function Home() {
         <ScreenLayout>
             <HeaderSection />
 
-            {/* <View className='mt-5'>
+            <View>
                 <Text className='text-4xl ml-5 font-bold'>Inicio</Text>
             </View>
             
-            <RoutineProgress /> */}
+            <RoutineProgress />
         </ScreenLayout>
     )
 }
