@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 
 export default function Login() {
+    const loginUser = async () => {}
+
     return (
         <View className='flex mt-40 items-center h-full'>
-            <Text className='font-semibold text-3xl'>Ingresa tu cuenta nueva</Text>
+            <Text className='font-semibold text-3xl'>Ingresa tu cuenta</Text>
             <View className='mt-10 w-full items-center flex gap-5'>
                 <TextInput
                     className='border border-zinc-400 px-3 py-2 rounded-xl text-lg w-[70%]'

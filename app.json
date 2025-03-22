@@ -27,6 +27,7 @@
       "adaptiveIcon": {
         "backgroundColor": "#ffffff"
       }
-    }
+    },
+    "extra": {}
   }
 }

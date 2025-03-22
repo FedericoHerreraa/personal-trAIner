@@ -7,6 +7,7 @@ export default function Routine() {
     return (
         <ScreenLayout>
             <HeaderSection />
+            
             <View className='flex flex-row justify-between'>
                 <Text className='text-4xl ml-5 font-bold'>Rutina</Text>
             </View>

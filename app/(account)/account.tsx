@@ -16,13 +16,13 @@ export default function Account() {
                 <View className='flex gap-5'>
                     <Link 
                         href="/login"
-                        className='border border-zinc-400 px-3 py-2 rounded-xl text-lg'
+                        className='border border-zinc-400 px-5 py-3 rounded-xl text-lg'
                         >
                             Ingresa a tu cuenta
                     </Link>
                     <Link 
                         href="/register"
-                        className='bg-zinc-800 px-3 py-3 rounded-xl text-white text-lg'
+                        className='bg-zinc-800 px-5 py-3 rounded-xl text-white text-lg'
                         >
                             Registra tu cuenta
                     </Link>
