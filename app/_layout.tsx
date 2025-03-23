@@ -6,11 +6,14 @@ import { AuthProvider } from 'context/AuthContext';
 export default function Layout() {
     return (
         <AuthProvider>
-            <Slot />
+            <Stack>
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen 
+                    name="modal" 
+                    options={{ presentation: 'modal', headerShown: false }} 
+                />
+                <Stack.Screen name="(account)" options={{ headerShown: false }} />
+            </Stack>
         </AuthProvider>
-        // <Stack>
-        //     <Stack.Screen name="index" options={{ headerShown: false }} />
-        //     <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        // </Stack>
     );
 }

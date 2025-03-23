@@ -10,7 +10,7 @@ export default function Home() {
             <HeaderSection />
 
             <View>
-                <Text className='text-4xl ml-5 font-bold'>Inicio</Text>
+                <Text className='text-5xl ml-5 font-bold'>Inicio</Text>
             </View>
             
             <RoutineProgress />
