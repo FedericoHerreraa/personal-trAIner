@@ -6,10 +6,7 @@ export const HeaderSection = () => {
     const router = useRouter();
     return (
         <View className='flex flex-row justify-between mt-5 px-5 pb-3'>
-            <Text className='text-2xl text-zinc-700/80'>Personal Tr
-                <Text className='text-violet-600 mx-1'>AI</Text>
-                ner
-            </Text>
+            <Text className='text-2xl text-zinc-700/80'>Bienvenido Federico</Text>
             <Pressable
                 onPress={() => router.push('/modal')}
                 className="px-4 py-2rounded-lg"

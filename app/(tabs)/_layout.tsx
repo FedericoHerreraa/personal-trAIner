@@ -4,7 +4,19 @@ import { MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
 
 export default function TabsLayout() {
     return (
-        <Tabs screenOptions={{ headerShown: false }}>
+        <Tabs 
+            screenOptions={{
+                headerShown: false,
+                tabBarStyle: {
+                    backgroundColor: "rgba(0, 0, 0, 0.1)", 
+                    borderTopWidth: 0, 
+                    elevation: 0, 
+                    position: "absolute", 
+                },
+                tabBarActiveTintColor: "#FFF", 
+                tabBarInactiveTintColor: "#AAA",
+            }}
+        >
             <Tabs.Screen
                 name="home"
                 options={{
