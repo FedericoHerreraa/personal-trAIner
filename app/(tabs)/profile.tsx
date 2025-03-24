@@ -8,7 +8,7 @@ export default function Profile() {
         <ScreenLayout>
             <HeaderSection />
             <View className='flex flex-row justify-between'>
-                <Text className='text-5xl ml-5 font-bold'>Perfil</Text>
+                <Text className='text-5xl ml-5 font-bold text-zinc-200'>Perfil</Text>
             </View>
         </ScreenLayout>
     )

@@ -21,28 +21,28 @@ export default function TabsLayout() {
                 name="home"
                 options={{
                     title: 'Inicio',
-                    tabBarIcon: () => <AntDesign size={28} name="home" />,
+                    tabBarIcon: () => <AntDesign size={28} name="home" color="white" />,
                 }}
             />
             <Tabs.Screen
                 name="routine"
                 options={{
                     title: 'Rutina',
-                    tabBarIcon: () => <MaterialCommunityIcons name="weight-lifter" size={24} color="black" />,
+                    tabBarIcon: () => <MaterialCommunityIcons name="weight-lifter" size={24} color="white" />,
                 }}
             />
             <Tabs.Screen
                 name="trainer"
                 options={{
                     title: 'TrAIner',
-                    tabBarIcon: () => <Feather name="cpu" size={24} color="black" />,
+                    tabBarIcon: () => <Feather name="cpu" size={24} color="white" />,
                 }}
             />
             <Tabs.Screen
                 name="profile"
                 options={{
                     title: 'Perfil',
-                    tabBarIcon: () => <AntDesign size={28} name="user" />,
+                    tabBarIcon: () => <AntDesign size={28} name="user" color="white" />,
                 }}
             />
         </Tabs>

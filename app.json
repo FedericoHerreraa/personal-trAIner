@@ -10,7 +10,7 @@
       "expo-router"
     ],
     "orientation": "portrait",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "scheme": "workout-ai",
     "splash": {
       "resizeMode": "contain",
