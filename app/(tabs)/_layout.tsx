@@ -8,7 +8,7 @@ export default function TabsLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarStyle: {
-                    backgroundColor: "rgba(0, 0, 0, 0.1)", 
+                    backgroundColor: "rgba(0, 0, 0, 0.5)", 
                     borderTopWidth: 0, 
                     elevation: 0, 
                     position: "absolute", 
@@ -21,28 +21,28 @@ export default function TabsLayout() {
                 name="home"
                 options={{
                     title: 'Inicio',
-                    tabBarIcon: () => <AntDesign size={28} name="home" color="white" />,
+                    tabBarIcon: ({ focused }) => <AntDesign size={28} name="home" color={focused ? "#FACC15" : "white"}  />,
                 }}
             />
             <Tabs.Screen
                 name="routine"
                 options={{
                     title: 'Rutina',
-                    tabBarIcon: () => <MaterialCommunityIcons name="weight-lifter" size={24} color="white" />,
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="weight-lifter" size={24} color={focused ? "#FACC15" : "white"} />,
                 }}
             />
             <Tabs.Screen
                 name="trainer"
                 options={{
                     title: 'TrAIner',
-                    tabBarIcon: () => <Feather name="cpu" size={24} color="white" />,
+                    tabBarIcon: ({ focused }) => <Feather name="cpu" size={24} color={focused ? "#FACC15" : "white"} />,
                 }}
             />
             <Tabs.Screen
                 name="profile"
                 options={{
                     title: 'Perfil',
-                    tabBarIcon: () => <AntDesign size={28} name="user" color="white" />,
+                    tabBarIcon: ({ focused }) => <AntDesign size={28} name="user" color={focused ? "#FACC15" : "white"} />,
                 }}
             />
         </Tabs>
