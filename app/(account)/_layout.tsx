@@ -9,14 +9,18 @@ export default function LayoutAccount() {
                 name="login" 
                 options={{ 
                     title: "Ingresa", 
-                    headerBackTitle: "Volver"
+                    headerBackTitle: "Volver",
+                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerTintColor: "white",
                 }}
             />
             <Stack.Screen 
                 name="register" 
                 options={{ 
                     title: "Registrate",
-                    headerBackTitle: "Volver"
+                    headerBackTitle: "Volver",
+                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerTintColor: "white",
                 }}
             />
         </Stack>

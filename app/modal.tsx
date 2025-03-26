@@ -5,7 +5,7 @@ export default function Modal() {
   const router = useRouter();
 
   return (
-    <View className="flex-1 items-center justify-center bg-white">
+    <View className="flex-1 items-center justify-center bg-zinc-800">
       <Text className="text-2xl font-bold">Soy un Modal</Text>
 
       <Pressable 

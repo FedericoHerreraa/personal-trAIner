@@ -6,6 +6,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType } from "../types/types";
 import { supabase } from "../lib/supabase";
 import { User } from '@supabase/supabase-js';
+import { useRouter } from 'expo-router';
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
@@ -18,6 +19,7 @@ const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<User | null>();
     const [loading, setLoading] = useState(true);
+    const router = useRouter();
 
     useEffect(() => {
         setLoading(true)
@@ -69,7 +71,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const register = async (
         email: string,
-        name: string,
         password: string,
     ): Promise<string | undefined> => {
         try {
@@ -85,6 +86,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     
             const user = data.user
             setUser(user)
+            router.push('/home');
         } catch (error) {
             console.error('Error en el registro:', error);
             return `${error}`;
