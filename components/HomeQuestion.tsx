@@ -16,7 +16,7 @@ export const HomeQuestion = () => {
     
     return (
         <View className='mx-5 mb-7'>
-            <View className='border-[0.5px] border-yellow-400 rounded-2xl py-3 px-3 bg-zinc-800 flex flex-row items-center justify-between'>
+            <View className=' rounded-2xl py-3 px-5 bg-yellow-500/20 flex flex-row items-center justify-between'>
                 <Text className='text-zinc-300 font-semibold text-2xl'>{message}</Text>
                 {isTraining === undefined && (
                     <View className='flex flex-row items-center gap-4'>
