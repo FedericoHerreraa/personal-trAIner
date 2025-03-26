@@ -10,13 +10,29 @@ import { useForm, Controller } from 'react-hook-form';
 import { useAuth } from 'context/AuthContext';
 
 export default function Register() {
-    const { control, handleSubmit, formState: { errors } } = useForm<{ email: string; password: string }>();
+    const { control, handleSubmit, formState: { errors } } 
+        = useForm<{ 
+            email: string; 
+            password: string;
+            name: string;
+            lastName: string;
+            phone: string; 
+        }>();
+
     const { register } = useAuth()
 
-    const registerUser = async (dataUser: { email: string, password: string }) => {
+    const registerUser = async (
+        dataUser: { 
+            email: string, 
+            password: string,
+            name: string, 
+            lastName: string, 
+            phone: string 
+        }
+    ) => {
         try {
-            const { email, password } = dataUser;
-            await register(email, password);
+            const { email, password, name, lastName, phone } = dataUser;
+            await register(email, password, name, lastName, phone);
             
         } catch (error) {
             console.log("Error al registrar:", error);
@@ -28,14 +44,61 @@ export default function Register() {
             <Text className='font-semibold text-3xl text-white'>Registra tu nueva cuenta</Text>
 
             <View className='mt-10 w-full items-center flex gap-5'>
-                <TextInput
-                    className='border border-zinc-500 text-white px-3 py-4 h-16 rounded-2xl text-lg w-[70%]'
-                    placeholder='Nombre'
+                <Controller
+                    control={control}
+                    name="name"
+                    rules={{
+                        required: "El nombre es obligatorio",
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            className='border border-zinc-500 text-white px-3 h-16 py-4 rounded-2xl text-lg w-[70%]'
+                            placeholder='Nombre'
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            keyboardType="default"
+                            autoCapitalize="sentences"
+                        />
+                    )}
                 />
 
-                <TextInput
-                    className='border border-zinc-500 text-white px-3 py-4 h-16 rounded-2xl text-lg w-[70%]'
-                    placeholder='Apellido'
+                <Controller
+                    control={control}
+                    name="lastName"
+                    rules={{
+                        required: "El apellido es obligatorio",
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            className='border border-zinc-500 text-white px-3 h-16 py-4 rounded-2xl text-lg w-[70%]'
+                            placeholder='Apellido'
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            keyboardType="default"
+                            autoCapitalize="sentences"
+                        />
+                    )}
+                />
+
+                <Controller
+                    control={control}
+                    name="phone"
+                    rules={{
+                        required: "El telefono es obligatorio",
+                    }}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            className='border border-zinc-500 text-white px-3 h-16 py-4 rounded-2xl text-lg w-[70%]'
+                            placeholder='Nro. de teléfono'
+                            onBlur={onBlur}
+                            onChangeText={onChange}
+                            value={value}
+                            keyboardType="phone-pad"
+                            autoCapitalize="none"
+                        />
+                    )}
                 />
 
                 <Controller
