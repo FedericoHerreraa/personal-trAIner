@@ -29,12 +29,12 @@ export default function Register() {
 
             <View className='mt-10 w-full items-center flex gap-5'>
                 <TextInput
-                    className='border border-zinc-500 text-white px-3 py-3 rounded-2xl text-lg w-[70%]'
+                    className='border border-zinc-500 text-white px-3 py-4 h-16 rounded-2xl text-lg w-[70%]'
                     placeholder='Nombre'
                 />
 
                 <TextInput
-                    className='border border-zinc-500 text-white px-3 py-3 rounded-2xl text-lg w-[70%]'
+                    className='border border-zinc-500 text-white px-3 py-4 h-16 rounded-2xl text-lg w-[70%]'
                     placeholder='Apellido'
                 />
 
@@ -47,7 +47,7 @@ export default function Register() {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                            className='border border-zinc-500 text-white px-3 py-3 rounded-2xl text-lg w-[70%]'
+                            className='border border-zinc-500 text-white px-3 h-16 py-4 rounded-2xl text-lg w-[70%]'
                             placeholder='Dirección de correo'
                             onBlur={onBlur}
                             onChangeText={onChange}
@@ -68,7 +68,7 @@ export default function Register() {
                     }}
                     render={({ field: { onChange, onBlur, value } }) => (
                         <TextInput
-                            className='border border-zinc-500 text-white px-3 py-3 rounded-2xl text-lg w-[70%]'
+                            className='border border-zinc-500 text-white px-3 h-16 py-4 rounded-2xl text-lg w-[70%]'
                             placeholder='Contraseña'
                             onBlur={onBlur}
                             onChangeText={onChange}

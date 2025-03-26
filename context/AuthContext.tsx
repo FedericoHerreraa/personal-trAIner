@@ -31,27 +31,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 return
             }
 
-            if (data.session) {
-                const idUser = data.session.user.id
+            // const user = data.session
 
-                const { data: fullUser, error: fetchError } = await supabase
-                    .from('profiles')
-                    .select('*')
-                    .eq('id', idUser)
-                    .single()
-
-                if (fetchError) {
-                    console.error("Error al obtener el perfil completo:", fetchError)
-                    return
-                }
-
-                setUser(fullUser)
-                setLoading(false)
-            }
+            // setUser(user)
         };
 
         fetchSession()
-        
     }, []);
 
     const login = async (email: string, password: string) => {
@@ -67,6 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         const user = data.user
         setUser(user)
+        router.push('/home');
     }
 
     const register = async (
