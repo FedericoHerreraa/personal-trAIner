@@ -14,4 +14,5 @@ export interface AuthContextType {
     register: (email: string, password: string, name: string, lastName: string, phone: string) => Promise<string | undefined>;
     logOut: () => void;
     loading: boolean;
+    uploadImage: (imageUri: string) => Promise<void>;
 }

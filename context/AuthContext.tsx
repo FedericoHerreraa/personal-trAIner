@@ -3,13 +3,15 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { AuthContextType, User } from "../types/types";
 import { supabase } from "../lib/supabase";
 import { useRouter } from 'expo-router';
+import { Alert } from "react-native";
 
 const AuthContext = createContext<AuthContextType>({
     user: null,
     login: async (): Promise<string | undefined> => { return undefined },
     register: async (): Promise<string | undefined> => { return undefined; },
     logOut: () => {},
-    loading: true
+    loading: true,
+    uploadImage: (): Promise<void> => { return Promise.resolve(undefined) }
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -118,8 +120,53 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(null)
     }
 
+    const uploadImage = async (imageUri: string) => {
+        try {    
+            const ext = imageUri.split('.').pop()?.toLowerCase() || 'jpg';
+            const fileName = `profile_${Date.now()}.${ext}`;
+    
+            const formData = new FormData();
+            formData.append('file', {
+                uri: imageUri,
+                name: fileName,
+                type: `image/${ext}`,
+            } as any);
+    
+            const { data, error } = await supabase.storage
+                .from('profile-photos')
+                .upload(fileName, formData);
+    
+            if (error) throw error;
+    
+            const { data: publicUrl } = supabase.storage
+                .from('profile-photos')
+                .getPublicUrl(fileName);
+    
+            const { error: dbError } = await supabase
+                .from('profiles')
+                .update({ profile_photo: publicUrl.publicUrl })
+                .eq('id', user?.id);
+
+            if (user?.id) {
+                setUser({
+                    ...user,
+                    profile_photo: publicUrl.publicUrl
+                });
+            } else {
+                console.error('User ID is undefined. Cannot update user state.');
+            }
+
+            if (dbError) throw dbError;
+    
+            Alert.alert('Éxito', 'Imagen subida correctamente a supabase y a profiles.');
+        } catch (error) {
+            console.log('Upload Error:', error);
+            Alert.alert('Error', error instanceof Error ? error.message : 'Error desconocido');
+        } 
+    };
+
     return (
-        <AuthContext.Provider value={{ login, user, register, logOut, loading }}>
+        <AuthContext.Provider value={{ login, user, register, logOut, loading, uploadImage }}>
             {children}
         </AuthContext.Provider>
     );

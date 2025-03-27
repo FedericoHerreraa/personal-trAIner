@@ -8,7 +8,7 @@ export const HeaderSection = () => {
     const { user } = useAuth()
     
     return (
-        <View className='flex flex-row justify-between items-center mt-5 px-5'>
+        <View className='flex flex-row justify-between items-center mt-5 px-5 pb-2'>
             <Text className='text-2xl text-zinc-400/80'>Bienvenido {user?.name}</Text>
             <Pressable
                 onPress={() => router.push('/modal')}
@@ -17,7 +17,7 @@ export const HeaderSection = () => {
                 {user?.profile_photo ? (
                     <Image
                         source={{ uri: user?.profile_photo }}
-                        style={{ width: 40, height: 40, borderRadius: 20 }}
+                        style={{ width: 30, height: 30, borderRadius: 20 }}
                     />
                 ) : (
                     <FontAwesome5 name='user-circle' size={40} color='white' />
