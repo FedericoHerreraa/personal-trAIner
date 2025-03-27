@@ -5,6 +5,7 @@ export interface User {
     name: string | undefined;
     last_name: string | undefined;
     phone: string | undefined;
+    profile_photo: string | undefined;
 }
 
 export interface AuthContextType {

@@ -3,8 +3,6 @@ import { View, Text, Pressable } from 'react-native';
 import { SimpleLineIcons, Ionicons, Entypo } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 
-
-
 export const WeekDays = () => {
     return (
         <View>

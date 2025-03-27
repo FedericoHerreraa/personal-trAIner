@@ -1,8 +1,12 @@
 import { Tabs } from "expo-router";
-import { MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { Image } from "react-native";
+import { useAuth } from "context/AuthContext";
 
 export default function TabsLayout() {
+    const { user } = useAuth() 
+
     return (
         <Tabs 
             screenOptions={{
@@ -49,7 +53,14 @@ export default function TabsLayout() {
                 name="profile"
                 options={{
                     title: 'Perfil',
-                    tabBarIcon: ({ focused }) => <AntDesign size={28} name="user" color={focused ? "#FACC15" : "white"} />,
+                    tabBarIcon: ({ focused }) => {
+                        return user?.profile_photo ? (
+                            <Image
+                                source={{ uri: user.profile_photo }}
+                                style={{ width: 28, height: 28, borderRadius: 14, borderColor: focused ? "#FACC15" : "white", borderWidth: 1 }}
+                            />
+                        ) : <AntDesign size={28} name="user" color={focused ? "#FACC15" : "white"} />;
+                    }
                 }}
             />
         </Tabs>

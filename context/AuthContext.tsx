@@ -101,7 +101,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 email: user?.email,
                 name,
                 last_name: lastName,
-                phone
+                phone,
+                profile_photo: ''
             }
 
             setUser(fullUser)
