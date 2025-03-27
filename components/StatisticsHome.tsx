@@ -1,6 +1,7 @@
 
-import { View, Text } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { View, Text, Pressable } from 'react-native';
+import { Feather, SimpleLineIcons } from '@expo/vector-icons';
+import { Link } from 'expo-router';
 
 export const StatisticsHomePage = () => {
     const getFormattedDate = () => {
@@ -49,9 +50,14 @@ export const StatisticsHomePage = () => {
                     </View>
                 </View>
                 <View className="bg-zinc-900 h-40 rounded-2xl flex shadow-lg shadow-zinc-800 w-full">
-                    <View className='flex flex-row items-center justify-between border-b border-b-zinc-700 px-4 py-2 h-1/3'>
+                    <View className='flex flex-row items-center justify-between border-b border-b-zinc-700 px-4 py-2'>
                         <Text className='text-yellow-400 text-xl font-semibold'>Tu rutina de hoy</Text>
-                        <Text className='text-zinc-400'>Ver mas</Text>
+                        <Link asChild href='/home/todaysRoutine'>
+                            <Pressable className='flex flex-row items-center gap-3'>
+                                <Text className='text-zinc-400'>Ver mas</Text>
+                                <SimpleLineIcons name="arrow-right" size={10} color="#A1A1AA" />
+                            </Pressable>
+                        </Link>
                     </View>
                     <View className='flex flex-row items-center h-2/3 mx-10'>
                         <View className='flex flex-row items-start gap-5'>    
