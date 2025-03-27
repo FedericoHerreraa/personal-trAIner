@@ -1,6 +1,6 @@
-
-import { Tabs } from "expo-router"
+import { Tabs } from "expo-router";
 import { MaterialCommunityIcons, AntDesign, Feather } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 
 export default function TabsLayout() {
     return (
@@ -8,13 +8,20 @@ export default function TabsLayout() {
             screenOptions={{
                 headerShown: false,
                 tabBarStyle: {
-                    backgroundColor: "rgba(0, 0, 0, 0.8)", 
-                    borderTopWidth: 0, 
-                    elevation: 0, 
-                    position: "absolute", 
+                    backgroundColor: "rgba(0, 0, 0, 0.6)", 
+                    borderTopWidth: 0,
+                    elevation: 0,
+                    position: "absolute",
                 },
-                tabBarActiveTintColor: "#FFF", 
+                tabBarActiveTintColor: "#FFF",
                 tabBarInactiveTintColor: "#AAA",
+                tabBarBackground: () => ( 
+                    <BlurView
+                        intensity={80}  
+                        tint="dark"   
+                        style={{ flex: 1 }}
+                    />
+                ),
             }}
         >
             <Tabs.Screen
@@ -35,7 +42,7 @@ export default function TabsLayout() {
                 name="trainer"
                 options={{
                     title: 'TrAIner',
-                    tabBarIcon: ({ focused }) => <Feather name="cpu" size={24} color={focused ? "#FACC15" : "white"} />,
+                    tabBarIcon: ({ focused }) => <MaterialCommunityIcons name="dots-circle" size={24} color={focused ? "#FACC15" : "white"} />,
                 }}
             />
             <Tabs.Screen
@@ -46,5 +53,5 @@ export default function TabsLayout() {
                 }}
             />
         </Tabs>
-    )
+    );
 }

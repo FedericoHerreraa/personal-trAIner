@@ -5,7 +5,7 @@ import { ScreenLayout } from 'components/ScreenLayout';
 
 export default function Account() {
     return (
-        <ScreenLayout>
+        <ScreenLayout bg='bg-black'>
             <View className='flex justify-center items-center h-full'>
                 <Text className='text-zinc-400 mb-2'>Buenvenido a</Text>
                 <Text className='text-white text-5xl mb-10 pb-5 font-semibold border-b border-b-zinc-700'>Personal Tr<Text className='text-violet-400'>AI</Text>ner</Text>

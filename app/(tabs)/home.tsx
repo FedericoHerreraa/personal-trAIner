@@ -8,8 +8,8 @@ import { HomeQuestion } from 'components/HomeQuestion';
 
 export default function Home() {
     return (
-        <ScreenLayout>
-            <ScrollView>
+        <ScreenLayout bg='bg-black'>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 <HeaderSection />
 
                 <View>

@@ -5,7 +5,7 @@ import { HeaderSection } from 'components/HeaderSection';
 
 export default function Trainer() {
     return (
-        <ScreenLayout>
+        <ScreenLayout bg='bg-black'>
             <HeaderSection />
 
             <View className='flex flex-row justify-between'>
