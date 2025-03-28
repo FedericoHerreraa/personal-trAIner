@@ -31,7 +31,7 @@ export default function Routine() {
                                             <MaterialCommunityIcons name="dots-circle" size={40} color="white" />
                                         </Text>
                                         <View>
-                                            <Text className='text-zinc-400 text-lg'>Utiliza tu Personal TrAIner</Text>
+                                            <Text className='text-zinc-400 text-lg'>Utiliza tu Personal Tr<Text className='text-yellow-400'>AI</Text>ner</Text>
                                             <Text className='text-zinc-200 text-3xl'>Crear rutina con <Text className='font-semibold text-violet-400'>IA</Text></Text>
                                         </View>
                                     </View>

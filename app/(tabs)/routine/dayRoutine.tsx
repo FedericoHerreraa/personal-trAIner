@@ -7,7 +7,7 @@ import { Picker } from '@react-native-picker/picker';
 import { useRoutine } from 'context/RoutineContext';
 
 export default function DayRoutine() {
-    const [numberMuscles, setNumberMuscles] = useState(0);
+    const [numberMuscles, setNumberMuscles] = useState(1);
     const [selectedValue, setSelectedValue] = useState('Bicep');
     const navigation = useNavigation();
     const { day } = useLocalSearchParams();
@@ -22,9 +22,9 @@ export default function DayRoutine() {
         }
 
         addMuscle(day.toString().toLowerCase(), muscle, 1);
-
-        console.log(routine)
     }
+
+    const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
     useEffect(() => { if (day) navigation.setOptions({ title: `${day}` }) }, [day, navigation]);
 
@@ -51,7 +51,7 @@ export default function DayRoutine() {
                                 <View className='bg-zinc-900 rounded-3xl p-5' key={index}>
                                     <View className='flex flex-row items-center justify-between mx-5'>
                                         <Text className='text-white text-3xl font-semibold'>
-                                            {muscle.name.charAt(0).toUpperCase() + muscle.name.slice(1).toLowerCase()}
+                                            {firstUpperCase(muscle.name)}
                                         </Text>
                                         <Pressable onPress={() => console.log('edit')}>
                                             <Text className='text-blue-500 font-semibold text-xl'>Editar</Text>
@@ -62,7 +62,7 @@ export default function DayRoutine() {
                                             <Text className='text-zinc-200 text-lg'>
                                                 Elegir Ejercicios para: {' '}
                                                 <Text className='text-white font-semibold text-xl'>
-                                                    {muscle.name.charAt(0).toUpperCase() + muscle.name.slice(1).toLowerCase()}
+                                                    {firstUpperCase(muscle.name)}
                                                 </Text>
                                             </Text>
                                         </Pressable>
@@ -75,7 +75,7 @@ export default function DayRoutine() {
                     {numberMuscles === 1 && (
                         <View className='bg-zinc-900 rounded-3xl p-5'>
                             <View className='flex flex-row items-center justify-between mx-5'>
-                                <Text className='text-white text-3xl font-semibold'>{selectedValue.charAt(0).toUpperCase() + selectedValue.slice(1).toLowerCase()}</Text>
+                                <Text className='text-white text-3xl font-semibold'>{firstUpperCase(selectedValue)}</Text>
                                 <Pressable onPress={addMuscleToContext}>
                                     <Text className='text-blue-500 font-semibold text-xl'>Guardar</Text>
                                 </Pressable>

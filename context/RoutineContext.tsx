@@ -22,14 +22,6 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
         }
     }, [user]);
 
-    useEffect(() => {
-        console.log(routine);
-
-        routine?.days.map(day => (
-            console.log(day)
-        ))
-    }, [routine]);
-
     const addMuscle = (day: string, muscle: Muscle, duration: number) => {
         if (!routine) return; 
 
@@ -53,8 +45,6 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
 
             return { ...prevRoutine, days: updatedDays };
         });
-
-        console.log(routine);
     };
 
     return (

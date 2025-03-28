@@ -4,8 +4,6 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
 
 export const HomeQuestion = () => {
     const [isTraining, setIsTraining] = useState<boolean>();

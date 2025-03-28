@@ -1,21 +1,44 @@
 
 import { View, Text, Pressable } from 'react-native';
-import { Feather, SimpleLineIcons } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
+import { useRoutine } from 'context/RoutineContext';
+import { DayRoutineType, Muscle } from 'types/types';
+import { useEffect, useState } from 'react';
 
 export const StatisticsHomePage = () => {
+    const [muscles, setMuscles] = useState<Muscle[]>([]);
+    const { routine } = useRoutine();
+    const date = new Date();
+
+    const weekDays = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+
     const getFormattedDate = () => {
-        const date = new Date();
-        
         const formatter = new Intl.DateTimeFormat('es-ES', {
             weekday: 'long',
             day: 'numeric',
             month: 'long'
         });
-    
+
         const formattedDate = formatter.format(date);
         return formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
     };
+
+    const getTodaysMuscles = () => {
+        const dayToday = weekDays[date.getDay()];
+
+        if (routine) {
+            const day: DayRoutineType | undefined = routine.days.find(day => day.day.toLowerCase() === dayToday);
+            setMuscles(day ? day.muscles : []);
+        }
+    };
+
+    const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
+    useEffect(() => {
+        getTodaysMuscles();
+    }, [routine]);
+
 
     return (
         <View className='h-1/3 mx-5'>
@@ -60,11 +83,22 @@ export const StatisticsHomePage = () => {
                         </Link>
                     </View>
                     <View className='flex flex-row items-center h-2/3 mx-10'>
-                        <View className='flex flex-row items-start gap-5'>    
-                            <Feather name="pie-chart" size={55} color="white" />
+                        <View className='flex flex-row items-start gap-5'>
+                            {/* <Feather name="pie-chart" size={55} color="white" /> */}
+                            <MaterialCommunityIcons name="weight-kilogram" size={55} color="white" />
                             <View className='flex'>
                                 <Text className='text-zinc-400 text-lg'>{getFormattedDate()}</Text>
-                                <Text className='text-zinc-200 text-2xl'>Pecho, biceps, triceps</Text>
+                                <View className='flex flex-row items-center gap-1'>
+                                    {muscles.length !== 0 ? (
+                                        muscles.map((muscle, index) => (
+                                            <Text key={index} className='text-zinc-200 text-2xl'>
+                                                {firstUpperCase(muscle.name)}{index < muscles.length - 1 ? ', ' : ''}
+                                            </Text>
+                                        ))
+                                    ) : (
+                                        <Text className='text-zinc-200 text-2xl'>No tienes nada hoy</Text>
+                                    )}
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -73,4 +107,5 @@ export const StatisticsHomePage = () => {
         </View>
     )
 }
+
 
