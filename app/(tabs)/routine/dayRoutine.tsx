@@ -33,7 +33,7 @@ export default function DayRoutine() {
             <View className='mx-5 mt-10 mb-40'>
                 <View className='flex flex-row items-center justify-between mx-5 mb-5'>
                     <Text className='text-white text-2xl font-semibold'>Musculos</Text>
-                    <Pressable 
+                    <Pressable
                         disabled={numberMuscles === 1}
                         onPress={() => setNumberMuscles(numberMuscles + 1)}
                     >
@@ -57,7 +57,22 @@ export default function DayRoutine() {
                                             <Text className='text-blue-500 font-semibold text-xl'>Editar</Text>
                                         </Pressable>
                                     </View>
-                                    <Link asChild href='/routine/exercise' className='mt-5'>
+
+                                    {muscle.exercises.length !== 0 && (
+                                        <View className='bg-zinc-800 rounded-2xl p-3 mt-5 flex gap-2'>
+                                            {muscle.exercises.map((exercise, index) => (
+                                                <View key={index}>
+                                                    <View className='flex flex-row items-center justify-between mx-5'>
+                                                        <Text className='text-white text-xl font-semibold'>
+                                                            {firstUpperCase(exercise.name)}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+                                            ))}
+                                        </View>
+                                    )}
+                                    
+                                    <Link asChild href={`/routine/exercise?muscle=${muscle.name}&day=${encodeURIComponent(day.toString())}`} className='mt-5'>
                                         <Pressable className='w-full border border-zinc-700 bg-zinc-800 py-3 rounded-xl flex flex-row items-center justify-center px-5'>
                                             <Text className='text-zinc-200 text-lg'>
                                                 Elegir Ejercicios para: {' '}
@@ -71,7 +86,7 @@ export default function DayRoutine() {
                             ));
                         })()
                     }
-                    
+
                     {numberMuscles === 1 && (
                         <View className='bg-zinc-900 rounded-3xl p-5'>
                             <View className='flex flex-row items-center justify-between mx-5'>

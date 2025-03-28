@@ -21,6 +21,7 @@ export interface AuthContextType {
 export interface RoutineContextType {
     routine: RoutineType | null;
     addMuscle: (day: string, muscle: Muscle, duration: number) => void;
+    addExercise: (day: string, muscle: Muscle, exercises: Exercise) => void;
 }
 
 export interface RoutineType {
