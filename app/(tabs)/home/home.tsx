@@ -5,8 +5,14 @@ import { StatisticsHomePage } from 'components/StatisticsHome';
 import { HeaderSection } from 'components/HeaderSection';
 import { RoutinePreview } from 'components/RoutinePreview';
 import { HomeQuestion } from 'components/HomeQuestion';
+import { useAuth } from 'context/AuthContext';
+import { useEffect } from 'react';
 
 export default function Home() {
+    const { getSession } = useAuth()
+
+    useEffect(() => { getSession() }, [])
+
     return (
         <ScreenLayout bg='bg-black'>
             <ScrollView showsVerticalScrollIndicator={false}>

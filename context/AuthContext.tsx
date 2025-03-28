@@ -11,7 +11,8 @@ const AuthContext = createContext<AuthContextType>({
     register: async (): Promise<string | undefined> => { return undefined; },
     logOut: () => {},
     loading: true,
-    uploadImage: (): Promise<void> => { return Promise.resolve(undefined) }
+    uploadImage: async (): Promise<void> => { return Promise.resolve(undefined) },
+    getSession: async (): Promise<void> => {}
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -19,23 +20,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
-    useEffect(() => {
-        setLoading(true)
-        const fetchSession = async () => {
-            const { data, error } = await supabase.auth.getSession();
+    const getSession = async () => {
+        const { data, error } = await supabase.auth.getSession();
 
-            if (error) {
-                console.error('Error:', error)
-                return
-            }
+        if (error) {
+            console.error('Error:', error)
+            return
+        }
 
-            // const user = data.session
+        const session = data.session
 
-            // setUser(user)
-        };
+        const { data: fullUser, error: fetchError } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', session?.user.id)
+            .single()
 
-        fetchSession()
-    }, []);
+        if (fetchError) {
+            console.error("Error al obtener el perfil completo:", fetchError);
+            return;
+        }
+
+        setUser(fullUser)
+    }
 
     const login = async (email: string, password: string) => {
         const { data, error } = await supabase.auth.signInWithPassword({
@@ -166,7 +173,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ login, user, register, logOut, loading, uploadImage }}>
+        <AuthContext.Provider value={{ login, user, register, logOut, loading, uploadImage, getSession }}>
             {children}
         </AuthContext.Provider>
     );
@@ -175,7 +182,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 export const useAuth = () => {
     const context = useContext(AuthContext);
     if (context === undefined) {
-        throw new Error("useCart must be used within a CartProvider");
+        throw new Error("useAuth must be used within a AuthProvider");
     }
     return context;
 }

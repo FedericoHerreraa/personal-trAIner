@@ -16,7 +16,7 @@ export const WeekDays = () => {
                         <Pressable className="w-full flex flex-row items-center justify-between border border-zinc-700/40 rounded-3xl px-5 py-4 gap-2">
                             <View className='flex items-center flex-row gap-1'>
                             <Entypo name="dot-single" size={24} color="white" />
-                                <Text className="text-zinc-300 font-semibold text-xl">{day.name}</Text>
+                                <Text className="text-zinc-300 font-semibold text-xl">{day.name}: <Text className='text-zinc-400 text-[14px]'>sin crear</Text></Text>
                             </View>
                             <SimpleLineIcons name="arrow-right" size={15} color="#EAB308" />
                         </Pressable>
