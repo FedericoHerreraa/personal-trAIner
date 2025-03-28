@@ -8,7 +8,7 @@ import { useRoutine } from 'context/RoutineContext';
 
 export default function DayRoutine() {
     const [numberMuscles, setNumberMuscles] = useState(1);
-    const [selectedValue, setSelectedValue] = useState('Bicep');
+    const [selectedValue, setSelectedValue] = useState('Musculo');
     const navigation = useNavigation();
     const { day } = useLocalSearchParams();
     const { addMuscle, routine } = useRoutine()

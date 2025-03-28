@@ -10,7 +10,7 @@ export default function HomeLayout() {
                 options={{ 
                     title: 'Rutina de hoy',
                     headerBackTitle: 'Volver',
-                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerStyle: { backgroundColor: "#000" }, 
                     headerTintColor: "white",
                 }} 
             />
@@ -18,7 +18,7 @@ export default function HomeLayout() {
                 options={{ 
                     title: 'Mejorar la rutina',
                     headerBackTitle: 'Volver',
-                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerStyle: { backgroundColor: "#000" }, 
                     headerTintColor: "white",
                 }} 
             />

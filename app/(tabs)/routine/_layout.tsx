@@ -9,7 +9,7 @@ export default function RoutineLayout() {
                 options={{
                     title: "Dia",
                     headerBackTitle: 'Volver',
-                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerStyle: { backgroundColor: "#000" }, 
                     headerTintColor: "white",
                 }} 
             />

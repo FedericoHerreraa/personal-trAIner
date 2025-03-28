@@ -23,15 +23,15 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
         }
     }, [user]);
 
-    useEffect(() => {
-        console.log("Routine actualizada:", routine);
+    // useEffect(() => {
+    //     console.log("Routine actualizada:", routine);
     
-        if (!routine || !routine.days.length) return;
+    //     if (!routine || !routine.days.length) return;
     
-        console.log("Día 0 encontrado:", routine.days[0]);
+    //     console.log("Día 0 encontrado:", routine.days[0]);
     
-        routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
-    }, [routine]);
+    //     routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
+    // }, [routine]);
 
     const addMuscle = (day: string, muscle: Muscle, duration: number) => {
         if (!routine) return; 
@@ -90,9 +90,7 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
                     { day, duration: 1, muscles: [{ ...muscle, exercises: [exercise] }] },
                 ];
             }
-    
-            console.log("Ejercicio agregado:", exercise);
-    
+        
             return { ...prevRoutine, days: updatedDays };
         });
     };

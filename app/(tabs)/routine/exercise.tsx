@@ -55,9 +55,10 @@ export default function Exercise() {
                 {routine?.days && routine?.days.length > 0 &&
                     (() => {
                         const dayRoutine = routine.days.find(d => d.day === day.toString().toLowerCase());
-                        if (!dayRoutine) return null;
+                        if (dayRoutine === undefined || dayRoutine === null) return null;
 
-                        const muscleInRoutine: Muscle | undefined = dayRoutine.muscles.find(m => m.name === muscle.toString().toLowerCase());
+                        const muscleInRoutine: Muscle | undefined = dayRoutine.muscles.find(m => m.name.toLowerCase() === muscle.toString().toLowerCase());
+
                         if (!muscleInRoutine) {
                             console.error('Muscle not found in routine');
                             return null;
