@@ -9,12 +9,29 @@ import { useRoutine } from 'context/RoutineContext';
 export default function DayRoutine() {
     const [numberMuscles, setNumberMuscles] = useState(1);
     const [selectedValue, setSelectedValue] = useState('Musculo');
+    const [muscles, setMuscles] = useState([
+        { label: 'Bicep', value: 'bicep' },
+        { label: 'Tricep', value: 'tricep' },
+        { label: 'Hombros', value: 'hombros' },
+    ]);
     const navigation = useNavigation();
     const { day } = useLocalSearchParams();
     const { addMuscle, routine } = useRoutine()
 
+    useEffect(() => {
+        if (routine?.days && routine?.days.length > 0) {
+            const dayRoutine = routine.days.find(d => d.day === day.toString().toLowerCase());
+            if (!dayRoutine) return;
+    
+            setMuscles(prevMuscles =>
+                prevMuscles.filter(m => !dayRoutine.muscles.some(muscle => muscle.name === m.value))
+            );
+        }
+    }, [routine]);
+
     const addMuscleToContext = () => {
         setNumberMuscles(0);
+        setSelectedValue('Musculo');
 
         const muscle = {
             name: selectedValue,
@@ -91,7 +108,7 @@ export default function DayRoutine() {
                         <View className='bg-zinc-900 rounded-3xl p-5'>
                             <View className='flex flex-row items-center justify-between mx-5'>
                                 <Text className='text-white text-3xl font-semibold'>{firstUpperCase(selectedValue)}</Text>
-                                <Pressable onPress={addMuscleToContext}>
+                                <Pressable disabled={selectedValue === 'Musculo'} onPress={addMuscleToContext}>
                                     <Text className='text-blue-500 font-semibold text-xl'>Guardar</Text>
                                 </Pressable>
                             </View>
@@ -100,9 +117,9 @@ export default function DayRoutine() {
                                 selectedValue={selectedValue}
                                 onValueChange={(itemValue) => setSelectedValue(itemValue)}
                             >
-                                <Picker.Item label="Bicep" value="bicep" />
-                                <Picker.Item label="Tricep" value="tricep" />
-                                <Picker.Item label="Hombros" value="hombros" />
+                                {muscles.map((muscle, index) => (
+                                    <Picker.Item key={index} label={muscle.label} value={muscle.value} />
+                                ))}
                             </Picker>
                         </View>
                     )}
@@ -111,3 +128,4 @@ export default function DayRoutine() {
         </ScrollView>
     );
 }
+

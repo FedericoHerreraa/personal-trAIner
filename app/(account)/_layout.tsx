@@ -10,7 +10,7 @@ export default function LayoutAccount() {
                 options={{ 
                     title: "Ingresa", 
                     headerBackTitle: "Volver",
-                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerStyle: { backgroundColor: "#000" }, 
                     headerTintColor: "white",
                 }}
             />
@@ -19,7 +19,7 @@ export default function LayoutAccount() {
                 options={{ 
                     title: "Registrate",
                     headerBackTitle: "Volver",
-                    headerStyle: { backgroundColor: "#1E293B" }, 
+                    headerStyle: { backgroundColor: "#000" }, 
                     headerTintColor: "white",
                 }}
             />
