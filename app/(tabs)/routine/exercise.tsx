@@ -65,13 +65,13 @@ export default function Exercise() {
                         }
 
                         return muscleInRoutine.exercises.map((exercise, index) => (
-                            <View className='bg-zinc-300 rounded-3xl p-5 mx-5 mt-10' key={index}>
+                            <View className='bg-zinc-600 rounded-2xl p-5 mx-5 mt-5' key={index}>
                                 <View className='flex flex-row items-center justify-between mx-5'>
-                                    <Text className='text-black text-3xl font-semibold'>
+                                    <Text className='text-zinc-300 text-3xl font-semibold'>
                                         {firstUpperCase(exercise.name)}
                                     </Text>
                                     <Pressable onPress={() => console.log('edit')}>
-                                        <Text className='text-blue-500 font-semibold text-xl'>Editar</Text>
+                                        <Text className='text-blue-400 font-semibold text-xl'>Editar</Text>
                                     </Pressable>
                                 </View>
                             </View>
@@ -80,11 +80,11 @@ export default function Exercise() {
                 }
 
                 {numberExercises === 1 && (
-                    <View className='bg-zinc-300 rounded-3xl p-5 mx-5 mt-10'>
+                    <View className='bg-zinc-600 rounded-3xl p-5 mx-5 mt-10'>
                         <View className='flex flex-row items-center justify-between mx-5'>
-                            <Text className='text-black text-3xl font-semibold'>{firstUpperCase(selectedValue)}</Text>
+                            <Text className='text-zinc-300 text-3xl font-semibold'>{firstUpperCase(selectedValue)}</Text>
                             <Pressable onPress={addExerciseToContext} >
-                                <Text className='text-blue-800 font-semibold text-xl'>Guardar</Text>
+                                <Text className='text-blue-400 font-semibold text-xl'>Guardar</Text>
                             </Pressable>
                         </View>
                         <Picker
