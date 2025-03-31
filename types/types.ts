@@ -44,6 +44,6 @@ export interface Exercise {
     name: string;
     series: number;
     repetitions: number;
-    weight: number;
+    weight: number | number[];
 }
 
