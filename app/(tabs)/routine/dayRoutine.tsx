@@ -1,7 +1,7 @@
 
 import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, TextInput } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Picker } from '@react-native-picker/picker';
 import { useRoutine } from 'context/RoutineContext';
@@ -9,6 +9,8 @@ import { useRoutine } from 'context/RoutineContext';
 export default function DayRoutine() {
     const [numberMuscles, setNumberMuscles] = useState(1);
     const [selectedValue, setSelectedValue] = useState('Musculo');
+    const [duration, setDuration] = useState<number>();
+    const [showDuration, setShowDuration] = useState(false);
     const [muscles, setMuscles] = useState([
         { label: 'Bicep', value: 'bicep' },
         { label: 'Tricep', value: 'tricep' },
@@ -16,7 +18,7 @@ export default function DayRoutine() {
     ]);
     const navigation = useNavigation();
     const { day } = useLocalSearchParams();
-    const { addMuscle, routine } = useRoutine()
+    const { addMuscle, routine, addDurationTime } = useRoutine()
 
     useEffect(() => {
         if (routine?.days && routine?.days.length > 0) {
@@ -28,6 +30,13 @@ export default function DayRoutine() {
             );
         }
     }, [routine]);
+
+    const addTime = () => {
+        setShowDuration(true)
+        
+        if (duration === undefined) return;
+        addDurationTime(day.toString().toLowerCase(), duration);
+    }
 
     const addMuscleToContext = () => {
         setNumberMuscles(0);
@@ -48,6 +57,32 @@ export default function DayRoutine() {
     return (
         <ScrollView className='bg-black h-full' showsVerticalScrollIndicator={false}>
             <View className='mx-5 mt-10 mb-40'>
+                <View className='mb-10'>
+                    <View className='flex flex-row items-center justify-between mx-5'>
+                        <Text className='text-white text-2xl font-semibold'>Tiempo</Text>
+                        <Pressable onPress={addTime} disabled={showDuration}>
+                            <Text className='text-blue-500 font-semibold text-xl'>Guardar</Text>
+                        </Pressable>
+                    </View>
+                    {showDuration ? (
+                        <View className='flex flex-row items-center justify-between mx-5 mt-5'>
+                            <Text className='text-zinc-400 text-2xl font-semibold'>Duración</Text>
+                            <Text className='text-zinc-400 text-2xl font-semibold'>{duration} minutos</Text>
+                        </View>
+                    ) : (
+                        <View className='flex flex-row items-center gap-3 mt-5 mx-1'>
+                            <TextInput
+                                className='bg-zinc-900 border border-zinc-800 text-zinc-300 w-4/5 p-3 text-2xl rounded-xl'
+                                keyboardType='numeric'
+                                placeholder='Duración en minutos'
+                                value={duration?.toString()}
+                                onChangeText={text => setDuration(Number(text))}
+                            />
+                            <Text className='w-1/5 text-zinc-300 text-xl'>minutos</Text>
+                        </View>
+                    )}
+                </View>
+
                 <View className='flex flex-row items-center justify-between mx-5 mb-5'>
                     <Text className='text-white text-2xl font-semibold'>Musculos</Text>
                     <Pressable
@@ -76,11 +111,11 @@ export default function DayRoutine() {
                                     </View>
 
                                     {muscle.exercises.length !== 0 && (
-                                        <View className='bg-zinc-800 rounded-2xl p-3 mt-5 flex gap-2'>
+                                        <View className='bg-zinc-800 rounded-2xl px-1 py-3 mt-5 flex gap-2'>
                                             {muscle.exercises.map((exercise, index) => (
                                                 <View key={index}>
                                                     <View className='flex flex-row items-center justify-between mx-5'>
-                                                        <Text className='text-white text-xl font-semibold'>
+                                                        <Text className='text-zinc-300 text-xl font-semibold'>
                                                             {firstUpperCase(exercise.name)}
                                                         </Text>
                                                     </View>

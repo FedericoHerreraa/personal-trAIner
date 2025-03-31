@@ -1,6 +1,6 @@
 
-import { View, Text, Pressable, ScrollView, Switch } from 'react-native';
-import { useLocalSearchParams, Link } from 'expo-router';
+import { View, Text, Pressable, ScrollView, Switch, TextInput } from 'react-native';
+import { useLocalSearchParams } from 'expo-router';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { ModalHeader } from 'components/ModalHeader';
 import { Picker } from '@react-native-picker/picker';
@@ -9,7 +9,7 @@ import { useRoutine } from 'context/RoutineContext';
 import { Muscle } from 'types/types';
 
 export default function Exercise() {
-    const [selectedValue, setSelectedValue] = useState<string>('Curl de bicep');
+    const [selectedValue, setSelectedValue] = useState<string>('Ejercicio');
     const [series, setSeries] = useState(0);
     const [repetitions, setRepetitions] = useState(0);
     const [weight, setWeight] = useState(0);
@@ -26,7 +26,7 @@ export default function Exercise() {
             name: selectedValue,
             series: series,
             repetitions: repetitions,
-            weight: bothWeight ? weight : [weight, weight],
+            weight: bothWeight ? [weight, weight] : weight,
         }
 
         addExercise(
@@ -34,12 +34,26 @@ export default function Exercise() {
             { name: muscle.toString().toLowerCase(), exercises: [exercise] },
             exercise
         );
+
+        setSelectedValue('Ejercicio');
+        setSeries(0);
+        setRepetitions(0);
+        setWeight(0);
     }
+
+    const handleWeightChange = (text: string) => {
+        const parsedWeight = Number(text);
+        if (isNaN(parsedWeight)) {
+            console.log("Peso no válido");
+        } else {
+            setWeight(parsedWeight);
+        }
+    };
 
     const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
     return (
-        <View className='bg-zinc-800 h-full pb-5'>
+        <View className='bg-zinc-800 h-full pb-7'>
             <ModalHeader title='Rutina' />
 
             <ScrollView>
@@ -70,11 +84,21 @@ export default function Exercise() {
                         }
 
                         return muscleInRoutine.exercises.map((exercise, index) => (
-                            <View className='bg-zinc-700 rounded-2xl p-5 mx-5 mt-5' key={index}>
+                            <View className='bg-zinc-700 border border-zinc-500 rounded-2xl py-4 px-2 mx-5 mt-5' key={index}>
                                 <View className='flex flex-row items-center justify-between mx-5'>
-                                    <Text className='text-zinc-300 text-3xl font-semibold'>
-                                        {firstUpperCase(exercise.name)}
-                                    </Text>
+                                    <View className='flex gap-2'>    
+                                        <Text className='text-zinc-300 text-3xl font-semibold'>
+                                            {firstUpperCase(exercise.name)}
+                                        </Text>
+                                        <View className='flex flex-row items-center gap-5'>
+                                            <Text className='text-lg text-zinc-300 border-r border-r-zinc-400 pr-5'>Series: {exercise.series}</Text>
+                                            <Text className='text-lg text-zinc-300'>Reps: {exercise.repetitions}</Text>
+                                        </View>
+                                        <Text className='text-lg text-zinc-300'>
+                                            {typeof exercise?.weight === 'number' ? exercise.weight : exercise.weight.map((w, index)=> <Text key={index}>{w} </Text>)} kg
+                                            - 
+                                            {typeof exercise?.weight === 'number' ? ' Peso' : ' Peso por lado'}</Text>
+                                    </View>
                                     <Pressable onPress={() => console.log('edit')}>
                                         <Text className='text-blue-400 font-semibold text-xl'>Editar</Text>
                                     </Pressable>
@@ -88,7 +112,7 @@ export default function Exercise() {
                     <View className='bg-zinc-800 border border-zinc-700 rounded-3xl p-5 mx-5 mt-10'>
                         <View className='flex flex-row items-center justify-between mx-5'>
                             <Text className='text-zinc-300 text-3xl font-semibold'>{firstUpperCase(selectedValue)}</Text>
-                            <Pressable onPress={addExerciseToContext} >
+                            <Pressable onPress={addExerciseToContext} disabled={selectedValue === 'Ejercicio'}>
                                 <Text className='text-blue-400 font-semibold text-xl'>Guardar</Text>
                             </Pressable>
                         </View>
@@ -119,14 +143,15 @@ export default function Exercise() {
                         <View className='mx-5 mt-5 flex flex-row justify-between items-center w-full'>
                             <View className='w-1/2'>
                                 <Text className='text-zinc-300 text-lg'>{bothWeight ? 'Pesos' : 'Peso'}</Text>
-                                <View className='flex flex-row items-center justify-between'>
-                                    <Pressable onPress={() => setWeight(weight - 1)} disabled={weight === 0}>
-                                        <FontAwesome6 name="minus" size={20} color="white" />
-                                    </Pressable>
-                                    <Text className='text-zinc-300 text-3xl font-semibold'>{weight}</Text>
-                                    <Pressable onPress={() => setWeight(weight + 1)}>
-                                        <FontAwesome6 name="plus" size={20} color="white" />
-                                    </Pressable>
+                                <View className='flex flex-row items-center gap-4  mt-2'>
+                                    <TextInput
+                                        placeholder="Ingrese peso"
+                                        className="border-l border-l-zinc-600 text-2xl font-semibold w-fit h-fit px-3 py-2 text-white"
+                                        keyboardType="numeric"
+                                        value={weight.toString()}
+                                        onChangeText={handleWeightChange}
+                                    />
+                                    <Text className='text-zinc-300 text-xl'>kg</Text>
                                 </View>
                             </View>
                             <View className='w-1/2 flex items-center gap-4'>

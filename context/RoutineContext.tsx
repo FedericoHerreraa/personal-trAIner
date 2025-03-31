@@ -7,7 +7,8 @@ import { useAuth } from "./AuthContext";
 const RoutineContext = createContext<RoutineContextType>({
     routine: null,
     addMuscle: () => {},
-    addExercise: () => {}
+    addExercise: () => {},
+    addDurationTime: () => {},
 }); 
 
 export const RoutineProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,6 +33,28 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
     
     //     routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
     // }, [routine]);
+
+    const addDurationTime = (day: string, duration: number) => {
+        if (!routine) return;
+    
+        setRoutine(prevRoutine => {
+            if (!prevRoutine) return null;
+    
+            const existingDayIndex = prevRoutine.days.findIndex(d => d.day === day);
+    
+            let updatedDays;
+    
+            if (existingDayIndex !== -1) {
+                updatedDays = prevRoutine.days.map((d, index) =>
+                    index === existingDayIndex ? { ...d, duration, muscles: d.muscles } : d
+                );
+            } else {
+                updatedDays = [...prevRoutine.days, { day, duration, muscles: [] }];
+            }
+    
+            return { ...prevRoutine, days: updatedDays };
+        });
+    };
 
     const addMuscle = (day: string, muscle: Muscle, duration: number) => {
         if (!routine) return; 
@@ -96,7 +119,7 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
     };
 
     return (
-        <RoutineContext.Provider value={{ routine, addMuscle, addExercise }}>
+        <RoutineContext.Provider value={{ routine, addMuscle, addExercise, addDurationTime }}>
             {children}
         </RoutineContext.Provider>
     );

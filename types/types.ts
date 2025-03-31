@@ -22,6 +22,7 @@ export interface RoutineContextType {
     routine: RoutineType | null;
     addMuscle: (day: string, muscle: Muscle, duration: number) => void;
     addExercise: (day: string, muscle: Muscle, exercises: Exercise) => void;
+    addDurationTime: (day: string, duration: number) => void;
 }
 
 export interface RoutineType {
