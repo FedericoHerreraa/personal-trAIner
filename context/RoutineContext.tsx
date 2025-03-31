@@ -3,47 +3,118 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Exercise, Muscle, RoutineContextType, RoutineType } from "../types/types";
 import { useAuth } from "./AuthContext";
+import { supabase } from "lib/supabase";
 
 const RoutineContext = createContext<RoutineContextType>({
     routine: null,
-    addMuscle: () => {},
-    addExercise: () => {},
-    addDurationTime: () => {},
-}); 
+    addMuscle: () => { },
+    addExercise: () => { },
+    addDurationTime: () => { },
+});
 
 export const RoutineProvider = ({ children }: { children: React.ReactNode }) => {
     const { user } = useAuth();
     const [routine, setRoutine] = useState<RoutineType | null>(null);
 
     useEffect(() => {
-        if (user?.id) {
-            setRoutine({
-                id_user: user.id,
-                days: [],
-            });
+        if (routine && routine.days.length) {
+            console.log("Routine actualizada:", routine);
+            saveRoutineToDB(routine);
         }
+    }, [routine]);
+
+    useEffect(() => {
+        if (!routine) return;
+
+        console.log("Rutina actualizada:", routine)
+
+        if (routine.days.length) {
+            console.log("Día 0 encontrado:", routine.days[0]);
+
+            routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
+        }
+    }, [routine])
+
+    useEffect(() => {
+        const fetchRoutineFromDB = async () => {
+            if (!user?.id) return;
+    
+            try {
+                const { data, error } = await supabase
+                    .from("routines")
+                    .select("*")
+                    .eq("user_id", user.id)
+                    .single();
+    
+                if (error && error.code !== "PGRST116") throw error; 
+    
+                if (data) {
+                    setRoutine({ id_user: user.id, days: data.routine });
+                } else {
+                    setRoutine({ id_user: user.id, days: [] });
+                }
+            } catch (err) {
+                console.error("Error obteniendo rutina de Supabase:", err);
+            }
+        };
+    
+        fetchRoutineFromDB();
     }, [user]);
 
-    // useEffect(() => {
-    //     console.log("Routine actualizada:", routine);
+    useEffect(() => {
+        console.log("Routine actualizada:", routine);
+
+        if (!routine || !routine.days.length) return;
+
+        console.log("Día 0 encontrado:", routine.days[0]);
+
+        routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
+    }, [routine])
+
+    const saveRoutineToDB = async (routine: RoutineType) => {
+        if (!routine || !routine.id_user) return;
     
-    //     if (!routine || !routine.days.length) return;
+        try {
+            const { data: existingRoutine, error: fetchError } = await supabase
+                .from("routines")
+                .select("id")
+                .eq("user_id", routine.id_user)
+                .single();
     
-    //     console.log("Día 0 encontrado:", routine.days[0]);
+            if (fetchError && fetchError.code !== "PGRST116") {
+                throw fetchError;
+            }
     
-    //     routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
-    // }, [routine]);
+            let response;
+            if (existingRoutine) {
+                response = await supabase
+                    .from("routines")
+                    .update({ routine: routine.days })
+                    .eq("user_id", routine.id_user);
+            } else {
+                response = await supabase
+                    .from("routines")
+                    .insert([{ user_id: routine.id_user, routine: routine.days }]);
+            }
+    
+            if (response.error) throw response.error;
+    
+            console.log("Rutina guardada en Supabase:", response.data);
+        } catch (err) {
+            console.error("Error guardando rutina en Supabase:", err);
+        }
+    };
 
     const addDurationTime = (day: string, duration: number) => {
         if (!routine) return;
-    
+
         setRoutine(prevRoutine => {
             if (!prevRoutine) return null;
-    
+
             const existingDayIndex = prevRoutine.days.findIndex(d => d.day === day);
-    
+
             let updatedDays;
-    
+
             if (existingDayIndex !== -1) {
                 updatedDays = prevRoutine.days.map((d, index) =>
                     index === existingDayIndex ? { ...d, duration, muscles: d.muscles } : d
@@ -51,13 +122,13 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
             } else {
                 updatedDays = [...prevRoutine.days, { day, duration, muscles: [] }];
             }
-    
+
             return { ...prevRoutine, days: updatedDays };
         });
     };
 
     const addMuscle = (day: string, muscle: Muscle, duration: number) => {
-        if (!routine) return; 
+        if (!routine) return;
 
         setRoutine(prevRoutine => {
             if (!prevRoutine) return null;
@@ -68,9 +139,9 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
 
             if (existingDayIndex !== -1) {
                 updatedDays = prevRoutine.days.map((d, index) =>
-                    index === existingDayIndex ? { 
-                        ...d, 
-                        muscles: [...d.muscles, muscle] 
+                    index === existingDayIndex ? {
+                        ...d,
+                        muscles: [...d.muscles, muscle]
                     } : d
                 );
             } else {
@@ -83,28 +154,28 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
 
     const addExercise = (day: string, muscle: Muscle, exercise: Exercise) => {
         if (!routine) return;
-    
+
         setRoutine(prevRoutine => {
             if (!prevRoutine) return null;
-    
+
             const existingDayIndex = prevRoutine.days.findIndex(d => d.day === day);
-    
+
             let updatedDays;
-    
+
             if (existingDayIndex !== -1) {
                 updatedDays = prevRoutine.days.map((d, index) =>
                     index === existingDayIndex
                         ? {
-                              ...d,
-                              muscles: d.muscles.map(m =>
-                                  m.name === muscle.name
-                                      ? {
-                                            ...m,
-                                            exercises: [...m.exercises, exercise],
-                                        }
-                                      : m
-                              ),
-                          }
+                            ...d,
+                            muscles: d.muscles.map(m =>
+                                m.name === muscle.name
+                                    ? {
+                                        ...m,
+                                        exercises: [...m.exercises, exercise],
+                                    }
+                                    : m
+                            ),
+                        }
                         : d
                 );
             } else {
@@ -113,7 +184,7 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
                     { day, duration: 1, muscles: [{ ...muscle, exercises: [exercise] }] },
                 ];
             }
-        
+
             return { ...prevRoutine, days: updatedDays };
         });
     };
