@@ -26,6 +26,7 @@ export interface RoutineContextType {
 }
 
 export interface RoutineType {
+    id: string | undefined;
     id_user: string | undefined;
     days: DayRoutineType[];
 }

@@ -27,7 +27,7 @@ export const StatisticsHomePage = () => {
     const getTodaysMuscles = () => {
         const dayToday = weekDays[date.getDay()];
 
-        if (routine) {
+        if (routine && routine.days) {
             const day: DayRoutineType | undefined = routine.days.find(day => day.day.toLowerCase() === dayToday);
             setMuscles(day ? day.muscles : []);
         }
