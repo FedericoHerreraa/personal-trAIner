@@ -17,23 +17,9 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
     const [routine, setRoutine] = useState<RoutineType | null>(null);
 
     useEffect(() => {
-        if (routine && routine.days.length) {
-            console.log("Routine actualizada:", routine);
-            saveRoutineToDB(routine);
-        }
+        console.log("Actualizando rutina", routine)
+        if (routine) saveRoutineToDB(routine);
     }, [routine]);
-
-    useEffect(() => {
-        if (!routine) return;
-
-        console.log("Rutina actualizada:", routine)
-
-        if (routine.days.length) {
-            console.log("Día 0 encontrado:", routine.days[0]);
-
-            routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
-        }
-    }, [routine])
 
     useEffect(() => {
         const fetchRoutineFromDB = async () => {
@@ -61,16 +47,6 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
         fetchRoutineFromDB();
     }, [user]);
 
-    useEffect(() => {
-        console.log("Routine actualizada:", routine);
-
-        if (!routine || !routine.days.length) return;
-
-        console.log("Día 0 encontrado:", routine.days[0]);
-
-        routine.days[0].muscles.forEach(m => console.log("Músculo:", m));
-    }, [routine])
-
     const saveRoutineToDB = async (routine: RoutineType) => {
         if (!routine || !routine.id_user) return;
     
@@ -89,12 +65,12 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
             if (existingRoutine) {
                 response = await supabase
                     .from("routines")
-                    .update({ routine: routine.days })
+                    .update({ routine: JSON.stringify(routine.days) })
                     .eq("user_id", routine.id_user);
             } else {
                 response = await supabase
                     .from("routines")
-                    .insert([{ user_id: routine.id_user, routine: routine.days }]);
+                    .insert([{ user_id: routine.id_user, routine: JSON.stringify(routine.days) }]);
             }
     
             if (response.error) throw response.error;
