@@ -32,13 +32,11 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
     
                 if (data) {
                     setRoutine({
-                        id: data.id,
                         id_user: user.id,
                         days: JSON.parse(data.routine)
                     });
                 } else {
                     setRoutine({
-                        id: undefined,
                         id_user: user.id,
                         days: []
                     });
@@ -62,16 +60,14 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
         try {
             const { data, error } = await supabase
                 .from("routines")
-                .upsert({
-                    user_id: routine.id_user,
-                    routine: routine.days
-                }, { onConflict: "id" }); 
+                .upsert({ user_id: routine.id_user, routine: routine.days }); 
 
             if (error) {
                 console.error("Error al guardar la rutina:", error);
             } else {
                 console.log("Rutina guardada o actualizada:", data);
             }
+
             // const { data: existingRoutine, error: fetchError } = await supabase
             //     .from("routines")
             //     .select("id")
