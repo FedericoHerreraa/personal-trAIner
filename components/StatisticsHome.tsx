@@ -11,7 +11,7 @@ export const StatisticsHomePage = () => {
     const { routine } = useRoutine();
     const date = new Date();
 
-    const weekDays = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+    const weekDays = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado'];
 
     const getFormattedDate = () => {
         const formatter = new Intl.DateTimeFormat('es-ES', {

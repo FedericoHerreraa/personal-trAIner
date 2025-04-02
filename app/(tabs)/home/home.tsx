@@ -22,7 +22,7 @@ export default function Home() {
                     <Text className='text-5xl ml-5 font-bold text-zinc-200'>Inicio</Text>
                 </View>
 
-                <View className='my-10'>
+                <View className='mt-10 mb-20'>
                     <HomeQuestion />
                     <StatisticsHomePage />
                     <RoutinePreview />

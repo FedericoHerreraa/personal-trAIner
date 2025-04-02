@@ -27,10 +27,10 @@ export const HomeQuestion = () => {
                             <Text className='text-zinc-200 text-3xl'>{isTraining !== undefined ? 'Ya registramos tu respuesta' : '¿Entrenaste hoy?'}</Text>
                         </View>
                         {isTraining === undefined && (
-                            <Pressable onPress={() => handleResponse(true)} className='bg-zinc-800 border border-zinc-700 p-1 rounded-xl h-full w-[35%]'>
+                            <Pressable onPress={() => handleResponse(true)} className=''>
                                 <View className='flex gap-2 justify-center items-center mt-3'>
-                                    <MaterialCommunityIcons name="cursor-default-click-outline" size={24} color="white" />
-                                    <Text className='text-white font-semibold'>Confirmar</Text>
+                                    {/* <MaterialCommunityIcons name="cursor-default-click-outline" size={24} color="white" /> */}
+                                    <Text className='text-white font-semibold'>Deslizar</Text>
                                 </View>
                             </Pressable>
                         )}
