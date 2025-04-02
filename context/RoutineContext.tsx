@@ -4,7 +4,6 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { Exercise, Muscle, RoutineContextType, RoutineType } from "../types/types";
 import { useAuth } from "./AuthContext";
 import { supabase } from "lib/supabase";
-import { v4 as uuidv4 } from 'uuid';
 
 const RoutineContext = createContext<RoutineContextType>({
     routine: null,
@@ -33,7 +32,7 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
                 if (data) {
                     setRoutine({
                         id_user: user.id,
-                        days: JSON.parse(data.routine)
+                        days: data.routine
                     });
                 } else {
                     setRoutine({
@@ -58,48 +57,37 @@ export const RoutineProvider = ({ children }: { children: React.ReactNode }) => 
         }
     
         try {
-            const { data, error } = await supabase
+            const { data: existingRoutine, error: fetchError } = await supabase
                 .from("routines")
-                .upsert({ user_id: routine.id_user, routine: routine.days }); 
+                .select("id")
+                .eq("user_id", routine.id_user)
+        
+            if (fetchError) throw fetchError;
+        
+            console.log("Rutina existente:", existingRoutine);
 
-            if (error) {
-                console.error("Error al guardar la rutina:", error);
+            if (existingRoutine && existingRoutine.length > 0) { 
+                const { error: deleteError } = await supabase
+                    .from("routines")
+                    .update({
+                        routine: routine.days
+                    })
+                    .eq("user_id", routine.id_user);
+
+                if (deleteError) throw deleteError;
             } else {
-                console.log("Rutina guardada o actualizada:", data);
+                const { error: insertError } = await supabase
+                    .from("routines")
+                    .insert({
+                        user_id: routine.id_user,
+                        routine: routine.days,
+                    });
+            
+                if (insertError) throw insertError;
             }
-
-            // const { data: existingRoutine, error: fetchError } = await supabase
-            //     .from("routines")
-            //     .select("id")
-            //     .eq("user_id", routine.id_user)
-            //     .single();
-    
-            // if (fetchError && fetchError.code !== "PGRST116") throw fetchError;
-    
-            // if (existingRoutine) {
-            //     console.log("Rutina:", JSON.stringify(routine.days, null, 2));
-            //     const { data, error } = await supabase
-            //         .from("routines")
-            //         .insert({
-            //             user_id: routine.id_user,
-            //             routine: routine.days
-            //         })
-            //         .eq("user_id", routine.id_user);
-    
-            //     if (error) throw error;
-            //     console.log("Rutina actualizada:", data);
-            // } else {
-            //     const { data, error } = await supabase
-            //         .from("routines")
-            //         .insert({
-            //             user_id: routine.id_user,
-            //             routine: routine.days
-            //         });
-    
-            //     if (error) throw error;
-            //     console.log("Rutina insertada:", data);
-            // }
-    
+        
+        
+            console.log("Rutina guardada correctamente en Supabase.");
         } catch (err) {
             console.error("Error guardando rutina en Supabase:", err);
         }
