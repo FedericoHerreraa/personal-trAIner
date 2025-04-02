@@ -41,17 +41,17 @@ export const RoutinePreview = () => {
     }, [routine]);
 
     return (
-        <View className="mt-24 mx-5">
+        <View className="mx-5">
             <View className="flex flex-row items-center mb-1 justify-between mx-3">
                 <Text className="text-zinc-200 text-xl font-semibold">Tiempo por día</Text>
                 <Link asChild href='/home/improveRoutine'>
-                    <Pressable className='flex flex-row items-center gap-3'>
+                    <Pressable className='flex flex-row items-center gap-2'>
                         <Text className="text-zinc-400">Ver mas</Text>
                         <SimpleLineIcons name="arrow-right" size={10} color="#A1A1AA" />
                     </Pressable>
                 </Link>
             </View>
-            <View className={`w-full h-[240px] bg-zinc-900 rounded-2xl mt-2 px-10 py-2 flex flex-row ${emptyRoutine ? 'items-center' : 'items-end'} justify-center gap-5 shadow-lg shadow-zinc-800`}>
+            <View className={`w-full h-[240px] bg-zinc-900 rounded-3xl mt-2 px-10 py-2 flex flex-row ${emptyRoutine ? 'items-center' : 'items-end'} justify-center gap-5 shadow-lg shadow-zinc-800`}>
                 {emptyRoutine ? (
                     <Text className="text-zinc-300 font-semibold text-2xl">No hay rutina registrada</Text>
                 ) : (
@@ -61,7 +61,7 @@ export const RoutinePreview = () => {
                                 <LinearGradient
                                     colors={['#FACC15', '#92400E']} 
                                     style={{ 
-                                        width: 32,
+                                        width: 27,
                                         borderTopRightRadius: 7,
                                         borderTopLeftRadius: 7,
                                         height: `${chart.percentage}%`
