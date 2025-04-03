@@ -6,6 +6,7 @@ import { useRoutine } from 'context/RoutineContext';
 import { DayRoutineType, Muscle } from 'types/types';
 import { useEffect, useState } from 'react';
 import { RoutinePreview } from './RoutinePreview';
+import { AssistanceStatistic } from './AssistanceStatistic';
 
 export const StatisticsHomePage = () => {
     const [muscles, setMuscles] = useState<Muscle[]>([]);
@@ -46,15 +47,9 @@ export const StatisticsHomePage = () => {
             <View className='mb-10 mx-5'>
                 <View className="flex gap-4">
                     <View className="flex flex-row items-center w-full gap-3 justify-between">
-                        <View className="bg-zinc-900 h-32 flex-1 rounded-3xl flex shadow-md shadow-zinc-800">
-                            <View className="border-b border-b-zinc-700 h-fit items-center px-2 py-2">
-                                <Text className="text-zinc-300">Este mes</Text>
-                            </View>
-                            <View className="flex-1 flex justify-center items-center">
-                                <Text className="text-3xl font-semibold text-zinc-200">50%</Text>
-                                <Text className='text-zinc-400'>Asistencia</Text>
-                            </View>
-                        </View>
+                        
+                        <AssistanceStatistic />
+
                         <View className="bg-zinc-900 h-32 flex-1 rounded-3xl flex shadow-md shadow-zinc-800">
                             <View className="border-b border-b-zinc-700 h-fit items-center px-4 py-2">
                                 <Text className="text-zinc-300">Este mes</Text>
@@ -77,10 +72,10 @@ export const StatisticsHomePage = () => {
                     <View className="bg-zinc-900 h-40 rounded-3xl flex shadow-lg shadow-zinc-800 w-full">
                         <View className='flex flex-row items-center justify-between border-b border-b-zinc-700 px-4 py-2'>
                             <Text className='text-yellow-400 text-xl font-semibold'>Tu rutina de hoy</Text>
-                            <Link asChild href='/home/todaysRoutine'>
+                            <Link asChild href={`/home/todaysRoutine?day=${weekDays[date.getDay()]}`}>
                                 <Pressable className='flex flex-row items-center gap-2'>
-                                    <Text className='text-zinc-400'>Ver mas</Text>
-                                    <SimpleLineIcons name="arrow-right" size={10} color="#A1A1AA" />
+                                    <Text className='text-zinc-400'>Empezar</Text>
+                                    <SimpleLineIcons name="arrow-right" size={10} color="#FACC15" />
                                 </Pressable>
                             </Link>
                         </View>
