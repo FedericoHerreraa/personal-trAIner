@@ -1,4 +1,7 @@
 
+import { EditDuration } from 'components/editComponents/EditDuration';
+import { EditExercise } from 'components/editComponents/EditExercise';
+import { EditMuscle } from 'components/editComponents/EditMuscle';
 import { ScreenLayout } from 'components/ScreenLayout';
 import { useRouter, useLocalSearchParams } from 'expo-router'
 import { View, Text, Pressable } from 'react-native'
@@ -9,38 +12,22 @@ export default function Edit() {
 
     let content;
 
-    if (exercise !== undefined) {
-        content = (
-            <View className='bg-zinc-800 h-full'>
-                <Text className='text-white'>Edit exercise</Text>
-            </View>
-        )
-        console.log('edit exercise')
-    } else if (exercise === undefined && muscle !== undefined) {
-        content = (
-            <View className='bg-zinc-800 h-full'>
-                <Text className='text-white'>Edit muscle</Text>
-            </View>
-        )
-        console.log('edit muscle')
-    } else if (exercise === undefined && muscle === undefined && day !== undefined) {
-        content = (
-            <View className='bg-zinc-800 h-full'>
-                <Text className='text-white'>Edit duration</Text>
-            </View>
-        )
-        console.log('edit day')
-    }
+    if (exercise !== undefined) content = <EditExercise />
+    else if (exercise === undefined && muscle !== undefined) content = <EditMuscle/>
+    else if (exercise === undefined && muscle === undefined && day !== undefined) content = <EditDuration />
 
     return (
         <ScreenLayout bg='bg-zinc-600'>
-            <View className='flex items-center pt-20'>
-                <View className='flex-1 justify-center items-center'>
-                    {content}
-                </View>  
-                <Pressable onPress={() => router.back()} className='bg-zinc-800 px-5 py-2 rounded-2xl'>
-                    <Text className='text-white'>Cerrar</Text>
-                </Pressable>
+            <View className='flex items-center pt-20 h-full'>
+                {content}
+                <View className='absolute bottom-10 flex gap-5'>
+                    <Pressable>
+                        <Text className='text-zinc-300 text-2xl border border-zinc-900 bg-zinc-700 px-5 py-2 rounded-2xl'>Guardar cambios</Text>
+                    </Pressable>
+                    <Pressable onPress={() => router.back()} className='flex items-center  px-5 py-2 rounded-2xl w-fit'>
+                        <Text className='text-white text-2xl'>Cerrar</Text>
+                    </Pressable>
+                </View>
             </View>
         </ScreenLayout>
     )

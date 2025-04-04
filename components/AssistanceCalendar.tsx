@@ -18,33 +18,35 @@ export const AssistanceCalendar = () => {
         const fetchAssistance = async () => {
             const oneWeekAgo = new Date();
             oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-
+    
             const { data, error } = await supabase
                 .from('assistance')
                 .select('date')
                 .eq('user_id', user?.id)
                 .gte('date', oneWeekAgo.toISOString());
-
+    
             if (error) {
                 console.error('Error fetching assistance:', error);
                 return;
             }
-
+    
+            const validData = Array.isArray(data) ? data : [];
+    
             const attendedDaysSet = new Set(
-                data.map((entry: any) => {
+                validData.map((entry: any) => {
                     const dayIndex = new Date(entry.date).getDay();
                     return allDays[dayIndex];
                 })
             );
-
+    
             const updatedWeek = allDays.map(day => ({
                 day,
                 went: attendedDaysSet.has(day),
             }));
-
+    
             setWeekData(updatedWeek);
         };
-
+    
         fetchAssistance();
     }, [user]);
 
