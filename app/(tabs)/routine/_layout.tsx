@@ -13,6 +13,7 @@ export default function RoutineLayout() {
                     headerTintColor: "white",
                 }} 
             />
+            <Stack.Screen name="edit" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
             <Stack.Screen name="exercise" options={{ headerShown: false, presentation: 'modal' }} />
             <Stack.Screen name="routineAI" options={{ headerShown: false, presentation: 'fullScreenModal' }} />
         </Stack>

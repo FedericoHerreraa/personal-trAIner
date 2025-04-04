@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { useRoutine } from 'context/RoutineContext';
 import { useEffect, useState } from 'react';
+import { firstUpperCase } from 'utils/functions';
 
 const chartsExample = [
     { day: 'lunes', percentage: 0 },
@@ -47,7 +48,7 @@ export const RoutinePreview = () => {
                 <Link asChild href='/home/improveRoutine'>
                     <Pressable className='flex flex-row items-center gap-2'>
                         <Text className="text-zinc-400">Ver mas</Text>
-                        <SimpleLineIcons name="arrow-right" size={10} color="#A1A1AA" />
+                        <SimpleLineIcons name="arrow-right" size={10} color="#FACC15" />
                     </Pressable>
                 </Link>
             </View>
@@ -68,7 +69,7 @@ export const RoutinePreview = () => {
                                     }} 
                                 />
                             </View>
-                            <Text className="text-zinc-300 font-semibold">{chart.day.slice(0,3)}</Text>
+                            <Text className="text-zinc-300 font-semibold">{firstUpperCase(chart.day.slice(0,3))}</Text>
                         </View>
                     ))
                 )}

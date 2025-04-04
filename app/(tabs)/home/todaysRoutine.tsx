@@ -4,6 +4,8 @@ import { View, Text, ScrollView, Pressable, FlatList, Dimensions } from 'react-n
 import { MaterialCommunityIcons, Feather, AntDesign } from '@expo/vector-icons';
 import { useRef, useState } from 'react';
 import { Exercise } from 'types/types';
+import { LinearGradient } from 'expo-linear-gradient';
+import { firstUpperCase } from 'utils/functions';
 
 export default function TodaysRoutine() {
     const { routine } = useRoutine();
@@ -20,8 +22,6 @@ export default function TodaysRoutine() {
             </View>
         );
     }
-
-    const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
     const calculateTime = () => {
         if (!routine) return 0;
@@ -82,63 +82,67 @@ export default function TodaysRoutine() {
                                     <Text className='text-zinc-200 mb-7'>{item.description}</Text>
                                     <View className='flex gap-5'>
                                         {item.muscles.map((muscle: any) => (
-                                            <View
-                                                key={muscle.name}
-                                                className='flex flex-row items-center w-full border border-yellow-100 px-10 py-5 rounded-2xl gap-7'
-                                            >
-                                                <MaterialCommunityIcons name="weight-lifter" size={30} color="white" />
-                                                <Text className='text-white text-3xl'>{firstUpperCase(muscle.name)}</Text>
-                                                <View className='flex flex-row items-center gap-2'>
-                                                    <Feather name="clock" size={20} color="gray" />
-                                                    <Text className='text-zinc-200'>{calculateTime()} min</Text>
+                                            <LinearGradient key={muscle.name} colors={['#8B5CF6', '#EAB308']} style={{ padding: 1, borderRadius: 15 }}>
+                                                <View
+                                                
+                                                    className='flex flex-row items-center w-full bg-zinc-900 px-10 py-5 rounded-2xl gap-7'
+                                                >
+                                                    <MaterialCommunityIcons name="weight-lifter" size={30} color="white" />
+                                                    <Text className='text-white text-3xl'>{firstUpperCase(muscle.name)}</Text>
+                                                    <View className='flex flex-row items-center gap-2'>
+                                                        <Feather name="clock" size={20} color="gray" />
+                                                        <Text className='text-zinc-200'>{calculateTime()} min</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
+                                            </LinearGradient>
+                                            
                                         ))}
                                     </View>
                                 </ScrollView>
                             );
                         } else if (item.type === 'muscle') {
-                            const exercises = calculateTime() / item.exercises.length;
+                            const exercisesDuration = calculateTime() / item.exercises.length;
                             return (
-                                <View style={{ width }}>
-                                    <ScrollView className=' pb-10 border border-yellow-100 shadow-md shadow-zinc-800 mx-10 px-10 rounded-3xl py-10'>
-                                        <View className='flex items-center gap-5'>
-                                            <MaterialCommunityIcons name="weight-lifter" size={80} color="white" />
-                                            <Text className='text-white text-4xl font-semibold'>{item.title}</Text>
-                                            <Text className='text-zinc-200 mb-5'>{item.description}</Text>
-                                            {item.exercises.map((exercise: Exercise, index: number) => (
-                                                <View
-                                                    key={index}
-                                                    className='flex items-center w-full border-t border-t-zinc-600 pt-7 gap-5'
-                                                >
-                                                    
-                                                    <Text className='text-white text-3xl font-semibold'>{firstUpperCase(exercise.name)}</Text>
-                                                    <View className='flex flex-row items-center gap-3'>
-                                                        <Text className='text-zinc-300'>Reps: <Text className='text-white font-semibold'>{exercise.repetitions}</Text></Text>
-                                                        <Text className='text-zinc-300'>Series: <Text className='text-white font-semibold'>{exercise.series}</Text></Text>
-                                                    </View>
-
-                                                    {Array.isArray(exercise.weight) ? (
+                                <View style={{ width }} className='flex items-center'>
+                                    <LinearGradient colors={['#8B5CF6', '#EAB308']} style={{ padding: 1, borderRadius: 22}}>
+                                        <ScrollView className='bg-zinc-900 shadow-md shadow-zinc-800 px-20 rounded-3xl'>
+                                            <View className='flex items-center gap-5 py-10'>
+                                                <MaterialCommunityIcons name="weight-lifter" size={80} color="white" />
+                                                <Text className='text-white text-4xl font-semibold'>{item.title}</Text>
+                                                <Text className='text-zinc-200 mb-5'>{item.description}</Text>
+                                                {item.exercises.map((exercise: Exercise, index: number) => (
+                                                    <View
+                                                        key={index}
+                                                        className='flex items-center w-full border-t border-t-zinc-600 pt-7 gap-5'
+                                                    >
+                                                        
+                                                        <Text className='text-white text-3xl font-semibold'>{firstUpperCase(exercise.name)}</Text>
                                                         <View className='flex flex-row items-center gap-3'>
-                                                            {exercise.weight.map((weight, index) => (
-                                                                <Text key={index} className='text-white font-semibold'>{weight} kg</Text>
-                                                            ))}
-                                                            <MaterialCommunityIcons name="weight-kilogram" size={20} color="gray" />
+                                                            <Text className='text-zinc-300'>Reps: <Text className='text-white font-semibold'>{exercise.repetitions}</Text></Text>
+                                                            <Text className='text-zinc-300'>Series: <Text className='text-white font-semibold'>{exercise.series}</Text></Text>
                                                         </View>
-                                                    ) : (
-                                                        <View className='flex flex-row items-center gap-3'>
-                                                            <Text className='text-zinc-300'>Peso: <Text className='text-white font-semibold'>{exercise.weight} kg</Text></Text>
-                                                        </View>
-                                                    )}
 
-                                                    <View className='flex flex-row items-center gap-2'>
-                                                        <Feather name="clock" size={20} color="gray" />
-                                                        <Text className='text-white font-semibold'>{exercises} min</Text>
+                                                        {Array.isArray(exercise.weight) ? (
+                                                            <View className='flex flex-row items-center gap-3'>
+                                                                {exercise.weight.map((weight, index) => (
+                                                                    <Text key={index} className={`text-white font-semibold ${index === 0 ? 'border-r border-r-zinc-400 pr-3' : ''}`}>{weight} kg</Text>
+                                                                ))}
+                                                            </View>
+                                                        ) : (
+                                                            <View className='flex flex-row items-center gap-3'>
+                                                                <Text className='text-zinc-300'>Peso: <Text className='text-white font-semibold'>{exercise.weight} kg</Text></Text>
+                                                            </View>
+                                                        )}
+
+                                                        <View className='flex flex-row items-center gap-2'>
+                                                            <Feather name="clock" size={20} color="gray" />
+                                                            <Text className='text-white font-semibold'>{exercisesDuration} min</Text>
+                                                        </View>
                                                     </View>
-                                                </View>
-                                            ))}
-                                        </View>
-                                    </ScrollView>
+                                                ))}
+                                            </View>
+                                        </ScrollView>
+                                    </LinearGradient>
                                 </View>
                             );
                         }

@@ -1,12 +1,15 @@
 
 import { View, Text, Pressable } from 'react-native';
-import { Feather, MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons';
+import { SimpleLineIcons } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import { useRoutine } from 'context/RoutineContext';
 import { DayRoutineType, Muscle } from 'types/types';
 import { useEffect, useState } from 'react';
 import { RoutinePreview } from './RoutinePreview';
 import { AssistanceStatistic } from './AssistanceStatistic';
+import { Dumbbell } from 'lucide-react-native';
+import { AssistanceCalendar } from './AssistanceCalendar';
+import { firstUpperCase } from 'utils/functions';
 
 export const StatisticsHomePage = () => {
     const [muscles, setMuscles] = useState<Muscle[]>([]);
@@ -34,8 +37,6 @@ export const StatisticsHomePage = () => {
             setMuscles(day ? day.muscles : []);
         }
     };
-
-    const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
     useEffect(() => {
         getTodaysMuscles();
@@ -69,6 +70,7 @@ export const StatisticsHomePage = () => {
                             </View>
                         </View>
                     </View>
+                    
                     <View className="bg-zinc-900 h-40 rounded-3xl flex shadow-lg shadow-zinc-800 w-full">
                         <View className='flex flex-row items-center justify-between border-b border-b-zinc-700 px-4 py-2'>
                             <Text className='text-yellow-400 text-xl font-semibold'>Tu rutina de hoy</Text>
@@ -80,8 +82,8 @@ export const StatisticsHomePage = () => {
                             </Link>
                         </View>
                         <View className='flex flex-row items-center h-2/3 mx-10'>
-                            <View className='flex flex-row items-start gap-5'>
-                                <MaterialCommunityIcons name="weight-kilogram" size={55} color="white" />
+                            <View className='flex flex-row items-end gap-5'>
+                                <Dumbbell color="white" size={40} />
                                 <View className='flex'>
                                     <Text className='text-zinc-400 text-lg'>{getFormattedDate()}</Text>
                                     <View className='flex flex-row items-center gap-1'>
@@ -101,6 +103,7 @@ export const StatisticsHomePage = () => {
                     </View>
                 </View>
             </View>
+            <AssistanceCalendar />
             <RoutinePreview />
         </View>
     )

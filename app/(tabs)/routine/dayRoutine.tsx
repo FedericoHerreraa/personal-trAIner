@@ -5,6 +5,7 @@ import { View, Text, Pressable, ScrollView, TextInput } from 'react-native';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { Picker } from '@react-native-picker/picker';
 import { useRoutine } from 'context/RoutineContext';
+import { firstUpperCase } from 'utils/functions';
 
 export default function DayRoutine() {
     const [numberMuscles, setNumberMuscles] = useState(1);
@@ -52,8 +53,6 @@ export default function DayRoutine() {
         addMuscle(day.toString().toLowerCase(), muscle, 1);
     }
 
-    const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-
     useEffect(() => { if (day) navigation.setOptions({ title: `${day}` }) }, [day, navigation]);
 
     return (
@@ -62,9 +61,17 @@ export default function DayRoutine() {
                 <View className='mb-10'>
                     <View className='flex flex-row items-center justify-between mx-5'>
                         <Text className='text-white text-2xl font-semibold'>Tiempo</Text>
-                        <Pressable onPress={addTime} disabled={showDuration}>
-                            <Text className='text-blue-500 font-semibold text-xl'>Guardar</Text>
-                        </Pressable>
+                        {showDuration ? (
+                            <Link href={`/routine/edit?day=${day}`} asChild>
+                                <Pressable>
+                                    <Text className='text-blue-500 font-semibold text-xl'>Editar</Text>
+                                </Pressable>
+                            </Link>
+                        ) : (
+                            <Pressable onPress={addTime}>
+                                <Text className='text-blue-500 font-semibold text-xl'>Agregar</Text>
+                            </Pressable>
+                        )}
                     </View>
 
                     {routine?.days && routine?.days.length > 0 &&
@@ -119,9 +126,11 @@ export default function DayRoutine() {
                                                 <Text className='text-white text-3xl font-semibold'>
                                                     {firstUpperCase(muscle.name)}
                                                 </Text>
-                                                <Pressable onPress={() => console.log('edit')}>
-                                                    <Text className='text-blue-500 font-semibold text-xl'>Editar</Text>
-                                                </Pressable>
+                                                <Link href={`/routine/edit?day=${day}&muscle=${muscle}`} asChild>
+                                                    <Pressable>
+                                                        <Text className='text-blue-500 font-semibold text-xl'>Editar</Text>
+                                                    </Pressable>
+                                                </Link>
                                             </View>
 
                                             {muscle.exercises.length !== 0 && (

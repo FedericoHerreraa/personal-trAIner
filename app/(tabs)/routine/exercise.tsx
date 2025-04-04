@@ -1,12 +1,13 @@
 
 import { View, Text, Pressable, ScrollView, Switch, TextInput } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams } from 'expo-router';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import { ModalHeader } from 'components/ModalHeader';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
 import { useRoutine } from 'context/RoutineContext';
 import { Muscle } from 'types/types';
+import { firstUpperCase } from 'utils/functions';
 
 export default function Exercise() {
     const [selectedValue, setSelectedValue] = useState<string>('Ejercicio');
@@ -49,8 +50,6 @@ export default function Exercise() {
             setWeight(parsedWeight);
         }
     };
-
-    const firstUpperCase = (str: string) => str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
     return (
         <View className='bg-zinc-800 h-full pb-7'>
@@ -99,9 +98,11 @@ export default function Exercise() {
                                             - 
                                             {typeof exercise?.weight === 'number' ? ' Peso' : ' Peso por lado'}</Text>
                                     </View>
-                                    <Pressable onPress={() => console.log('edit')}>
-                                        <Text className='text-blue-400 font-semibold text-xl'>Editar</Text>
-                                    </Pressable>
+                                    <Link href={`/routine/edit?day=${day}&muscle=${muscle}&exercise=${exercise}`} asChild>
+                                        <Pressable >
+                                            <Text className='text-blue-400 font-semibold text-xl'>Editar</Text>
+                                        </Pressable>
+                                    </Link>
                                 </View>
                             </View>
                         ))
